@@ -1,5 +1,6 @@
 package com.hussey.invoiceservice.dao;
 import com.hussey.invoiceservice.model.Invoice;
+import com.hussey.invoiceservice.model.InvoiceItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,22 @@ public class InvoiceDaoTest {
     @Autowired
     private InvoiceDao invoiceDao;
 
+    @Autowired
+    private InvoiceItemDao invoiceItemDao;
+
     // setUp()
     @BeforeEach
     public void setUp() throws Exception {
+        // Clean up the Invoice Item table in the database
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getAllInvoiceItem();
+        invoiceItemList.forEach(invoiceItem -> invoiceItemDao.deleteInvoiceItem(invoiceItem.getInvoiceItemId()));
+
         // Clean up the Invoice table in the database
         List<Invoice> invoiceList = invoiceDao.getAllInvoice();
         invoiceList.forEach(invoice -> invoiceDao.deleteInvoice(invoice.getInvoiceId()));
     }
 
+    // Tests
     @Test
     public void addInvoice() {
         // Add a new Invoice object to the database
