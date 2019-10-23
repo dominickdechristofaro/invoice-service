@@ -21,6 +21,10 @@ public class Invoice {
 
     }
 
+    public Invoice(Integer customerId) {
+        this.customerId = customerId;
+    }
+
     public Invoice(Integer customerId, LocalDate purchaseDate) {
         this.customerId = customerId;
         this.purchaseDate = purchaseDate;
